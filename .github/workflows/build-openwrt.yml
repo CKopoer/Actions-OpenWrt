@@ -70,6 +70,7 @@ jobs:
         cd openwrt
         git clone https://github.com/xiaorouji/openwrt-passwall package/passwall_package
         git clone https://github.com/xiaorouji/openwrt-passwall -b luci package/passwall_luci
+        git clone https://github.com/vernesong/OpenClash.git package/openclash
         $GITHUB_WORKSPACE/$DIY_P1_SH
 
     - name: Update feeds
