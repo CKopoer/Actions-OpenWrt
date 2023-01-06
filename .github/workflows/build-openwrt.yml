@@ -21,7 +21,7 @@ on:
 
 env:
   REPO_URL: https://github.com/openwrt/openwrt
-  REPO_BRANCH: master
+  REPO_BRANCH: v21.02.3
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: .config
   DIY_P1_SH: diy-part1.sh
@@ -59,8 +59,6 @@ jobs:
       run: |
         df -hT $PWD
         git clone $REPO_URL -b $REPO_BRANCH openwrt
-        cd openwrt
-        git checkout v21.02.3
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 
     - name: Load custom feeds
@@ -68,9 +66,6 @@ jobs:
         [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
         chmod +x $DIY_P1_SH
         cd openwrt
-        git clone https://github.com/xiaorouji/openwrt-passwall package/passwall_package
-        git clone https://github.com/xiaorouji/openwrt-passwall -b luci package/passwall_luci
-        git clone https://github.com/vernesong/OpenClash.git package/openclash
         $GITHUB_WORKSPACE/$DIY_P1_SH
 
     - name: Update feeds
