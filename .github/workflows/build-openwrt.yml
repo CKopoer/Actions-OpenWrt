@@ -96,6 +96,9 @@ jobs:
       id: package
       run: |
         cd openwrt
+        pushd feeds/packages/lang
+        rm -rf golang && svn co https://github.com/openwrt/packages/branches/openwrt-23.05/lang/golang
+        popd
         make defconfig
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
