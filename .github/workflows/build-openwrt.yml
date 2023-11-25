@@ -118,8 +118,10 @@ jobs:
       if: github.event.inputs.ssh  != 'true'
       run: |
         cd openwrt
-        mkdir -p bin/targets/test/test
-        cp .config bin/targets/test/test
+        
+        # mkdir -p bin/targets/test/test
+        # cp .config bin/targets/test/test
+        
         echo -e "$(nproc) thread compile"
         make -j$(nproc) || make -j1 || make -j1 V=s
         
