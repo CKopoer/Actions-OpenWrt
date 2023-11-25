@@ -18,8 +18,3 @@
 #echo 'src-git passwall https://github.com/xiaorouji/openwrt-passwall' >>feeds.conf.default
 sed -i '$a src-git kenzo https://github.com/kenzok8/openwrt-packages' feeds.conf.default
 sed -i '$a src-git small https://github.com/kenzok8/small' feeds.conf.default
-
-
-sed -i 's/1.8.8/1.8.10/g' package/network/utils/iptables/Makefile
-sed -i 's/bz2/xz/g' package/network/utils/iptables/Makefile
-sed -i 's/71c75889dc710676631553eb1511da0177bbaaf1b551265b912d236c3f51859f/5cc255c189356e317d070755ce9371eb63a1b783c34498fb8c30264f3cc59c9c/g' package/network/utils/iptables/Makefile
