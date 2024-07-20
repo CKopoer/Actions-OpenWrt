@@ -77,25 +77,20 @@ jobs:
       run: cd openwrt && ./scripts/feeds update -a
 
     - name: Install feeds
-      run: cd openwrt && ./scripts/feeds install -a && ./scripts/feeds install -a
+      run: |
+        cd openwrt
+
+        # golang update
+        rm -rf feeds/packages/lang/golang
+        git clone https://github.com/kenzok8/golang feeds/packages/lang/golang
+  
+        ./scripts/feeds install -a && ./scripts/feeds install -a && ./scripts/feeds install -a
 
     - name: Load custom configuration
       run: |
         [ -e files ] && mv files openwrt/files
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
-        chmod +x $DIY_P2_SH
-        cd openwrt
-        
-        # Update Go version
-        pushd feeds/packages/lang
-        # rm -rf golang && svn co https://github.com/openwrt/packages/tree/openwrt-23.05/lang/golang
-        
-        rm -rf golang
-        git clone https://github.com/openwrt/packages -b $REPO_BRANCH temp_repo
-        cp -r temp_repo/lang/golang . && rm -rf temp_repo
-        
-        popd
-        
+        chmod +x $DIY_P2_SH        
         $GITHUB_WORKSPACE/$DIY_P2_SH
 
     - name: SSH connection to Actions
