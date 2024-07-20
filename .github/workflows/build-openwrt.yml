@@ -85,9 +85,17 @@ jobs:
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
         chmod +x $DIY_P2_SH
         cd openwrt
+        
+        # Update Go version
         pushd feeds/packages/lang
-        rm -rf golang && svn co https://github.com/openwrt/packages/tree/openwrt-23.05/lang/golang
+        # rm -rf golang && svn co https://github.com/openwrt/packages/tree/openwrt-23.05/lang/golang
+        
+        rm -rf golang
+        git clone https://github.com/openwrt/packages -b $REPO_BRANCH temp_repo
+        cp -r temp_repo/lang/golang . && rm -rf temp_repo
+        
         popd
+        
         $GITHUB_WORKSPACE/$DIY_P2_SH
 
     - name: SSH connection to Actions
@@ -111,12 +119,6 @@ jobs:
       id: package
       run: |
         cd openwrt
-
-        # Update Go version
-        # pushd feeds/packages/lang
-        # rm -rf golang && svn co https://github.com/openwrt/packages/tree/openwrt-23.05/lang/golang
-        # popd
-        
         make defconfig
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
