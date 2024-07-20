@@ -104,7 +104,7 @@ jobs:
         cd openwrt
 
         mkdir -p bin/targets/test/test
-        cp .config bin/targets/test/test
+        cp .config bin/targets/test/test/.config
 
     - name: Download package
       if: github.event.inputs.ssh  != 'true'
